@@ -1,6 +1,7 @@
 package com.myproject.estore.dto;
 
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ public class ProductDTO {
 	private String pimg;
 	private String pdetail;
 	private MultipartFile uploadFile; 	
+	private Date create_date;
 	
 	private List<CartDTO> cart;
 	

@@ -1,6 +1,8 @@
 package com.myproject.estore.service;
 
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
+import com.myproject.estore.dto.ProductDTO;
 import com.myproject.estore.dto.Role;
 import com.myproject.estore.dto.Shop;
+import com.myproject.estore.mapper.ShopMapper;
 import com.myproject.estore.repository.AuthRepository;
 import com.myproject.estore.repository.ShopRepository;
 
@@ -21,8 +25,19 @@ import lombok.RequiredArgsConstructor;
 public class ShopService {
 	private final ShopRepository sRepository;
 	private final AuthRepository aRepository;
+	
 	@Autowired
 	private PasswordEncoder pwEncoder;
+	
+	@Autowired
+	private ShopMapper sMapper;
+	
+	
+	//shop product list
+	public List<ProductDTO> shopPList(String sid) {
+		return sMapper.sPList(sid);
+	}
+	
 	
 	public Shop EmailCheck(String email){
 		Shop shop = sRepository.findByemail(email);

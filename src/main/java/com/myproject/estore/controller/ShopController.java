@@ -1,11 +1,14 @@
 package com.myproject.estore.controller;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
+import com.myproject.estore.dto.ProductDTO;
 import com.myproject.estore.dto.Shop;
 import com.myproject.estore.service.ShopService;
 
@@ -25,13 +29,24 @@ public class ShopController {
 	private final ShopService sService;
 	private final PasswordEncoder pwEncoder;
 	
-	
 	//mypage
 	//마이페이지로
 	@GetMapping("mypage")
 	public String mypage() {
 		return "/shop/sMypage";
 	}
+	
+	
+	//Myproduct List
+	@GetMapping("sProduct")
+	public String sPList(Principal principal, Model model) {
+		String sid = principal.getName();
+		List<ProductDTO> sPList = sService.shopPList(sid);
+		model.addAttribute("list", sPList);
+		
+		return "/shop/shopProductList";
+	}
+	
 	
 	//shop 추가
 	@PostMapping("insert")

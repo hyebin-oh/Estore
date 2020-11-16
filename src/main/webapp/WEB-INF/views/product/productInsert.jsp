@@ -25,7 +25,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8">
-             <div class="mt-10">
+             <div class="mt-10">             
               <!-- 이미지 업로드 -->
              	<label for="pimg">이미지 등록</label>
             	<input type="file" name="uploadFile" id="pimg"/>              

@@ -35,8 +35,8 @@ public class AuthService implements UserDetailsService{
 		Optional<AuthEntity> authEntity = aRepository.findByEmail(username);
 		AuthEntity aEntity = authEntity.get();
 		System.out.println("role : " + aEntity.getRole());
+		System.out.println("rolekey "+ aEntity.getRole().getKey());
 		
-		System.out.println("role2 : " + Role.MANAGER.getKey());
 		
 		
 		//롤 부여하기

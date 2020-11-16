@@ -6,8 +6,8 @@
  <mapper namespace="com.myproject.estore.mapper.CartMapper">
  	
  	<insert id="cInsert" parameterType="com.myproject.estore.dto.CartDTO">
- 		insert into cart(pnum, userid, pname, price, count)
- 		values(#{pnum}, #{userid}, #{pname}, #{price}, #{count} )
+ 		insert into cart(pnum, userid, pname, price, count, sid)
+ 		values(#{pnum}, #{userid}, #{pname}, #{price}, #{count}, #{sid} )
  	</insert>
 
 	<resultMap type="com.myproject.estore.dto.CartDTO" id="cart">
@@ -29,7 +29,10 @@
 		select c.cnum, c.pnum, c.userid, c.pname, c.price, c.count, c.price*c.count sum, p.pimg
 		from cart c join product p on
 		c.pnum=p.pnum
-		<!--where p.userid=#{userid}-->
+		where userid=#{userid}
 	</select>
  	
+ 	<delete id="cDelete" parameterType="long">
+ 		delete cart from cnum=#{cnum}
+ 	</delete>
  </mapper>

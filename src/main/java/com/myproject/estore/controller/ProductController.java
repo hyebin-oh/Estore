@@ -2,6 +2,7 @@ package com.myproject.estore.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -34,9 +35,10 @@ public class ProductController {
 	}
 	
 	@PostMapping("productInsert")
-	public String productInsert(ProductDTO product, HttpServletRequest request) throws IOException{
-		//로그인 세션을 받아서 
-		
+	public String productInsert(ProductDTO product, HttpServletRequest request, Principal principal) throws IOException{
+		//shop login id
+		String sid = principal.getName();
+		product.setSid(sid);
 		
 		String fileName="";
 		MultipartFile uploadFile = product.getUploadFile();
@@ -59,6 +61,8 @@ public class ProductController {
 		}
 		
 		product.setPimg(fileName);
+		
+		
 		pService.productInsert(product);		
 		
 		return "redirect:/product/productList";
@@ -66,6 +70,7 @@ public class ProductController {
 	
 	@GetMapping("productList")
 	public String pList(Model model, @RequestParam(value="word", required=false, defaultValue="") String word ) {
+		
 		List<ProductDTO> list = pService.productList(word);
 		model.addAttribute("list", list);
 		
@@ -79,7 +84,6 @@ public class ProductController {
 		//word는 상단 검색어
 		List<ProductDTO> list = pService.searchList(word);
 		model.addAttribute("list", list);
-		System.out.println(word);
 		
 		return "/product/productSearch";
 	}

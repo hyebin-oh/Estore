@@ -31,7 +31,7 @@ public class CartService {
 	
 	//삭제
 	public int cartDelete(Long cnum) {
-		return 0;
+		return cMapper.cDelete(cnum);
 		
 	}
 

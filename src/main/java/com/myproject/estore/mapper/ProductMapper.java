@@ -15,8 +15,8 @@ import com.myproject.estore.dto.ProductDTO;
 @Mapper
 public interface ProductMapper {
 	//추가하기
-	@Insert("insert into product(ptype, pname, price, pimg, pdetail) "
-			+ "values(#{ptype}, #{pname}, #{price}, #{pimg}, #{pdetail})")
+	@Insert("insert into product(ptype, sid, pname, price, pimg, pdetail) "
+			+ "values(#{ptype}, #{sid}, #{pname}, #{price}, #{pimg}, #{pdetail})")
 	public int pInsert(ProductDTO product);
 	
 	//리스트

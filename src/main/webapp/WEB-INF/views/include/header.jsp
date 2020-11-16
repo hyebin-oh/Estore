@@ -35,7 +35,7 @@
 		function type(search){
 			var ptype = search;
 			
-			location.href="/product/productSearch?word="+ptype;
+			location.href="/product/productList?word="+ptype;
 		}
 
 		function search(){

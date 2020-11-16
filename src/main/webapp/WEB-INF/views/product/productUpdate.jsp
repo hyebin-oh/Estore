@@ -30,7 +30,7 @@
               <!-- 이미지 업로드 -->
              	<label for="pimg">이미지 등록</label>
             	<input type="file" name="uploadFile" id="pimg" value="${product.pimg }">
-            	<span><img src="../resources/upload/product/${product.pimg }" class="img-fluid">${product.pimg }</span>  
+            	<span><img src="../resources/upload/product/${product.pimg }" class="img-fluid"></span>  
             </div>
          
       		<div class="input-group-icon mt-10">

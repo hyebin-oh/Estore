@@ -37,7 +37,7 @@
             </thead>
             <tbody>
              <c:set var="total" value="0" />
-             <c:forEach items="${cList }" var="list" varStatus="vs">    
+             <c:forEach items="${cList }" var="list" varStatus="vs">
               <tr>
                 <td>
                   <div class="media">
@@ -61,7 +61,8 @@
                   <h5>${list.sum }</h5><!-- 수량*가격 -->
                 </td>
                 <td>                
-                  <input type="button" value="삭제" class="genric-btn disable circle"><!-- 삭제 -->
+                  <input type="button" value="삭제" class="genric-btn default-border circle arrow"
+                  	onclick="javascript:cDel('${list.cnum}', '${list.pname }')"><!-- 삭제 -->
                 </td>
               </tr>
               
@@ -78,17 +79,13 @@
                 </td>
                 <td></td>
               </tr>
-             
-             
-             
-
             </tbody>
           </table>
           
           
           <div class="checkout_btn_inner float-right">
-            <a class="btn_1" href="#">Continue Shopping</a>
-            <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
+            <a class="btn_1" href="/product/productList">Continue Shopping</a>
+            <a class="btn_1 checkout_btn_1" href="/order/oCheck">Proceed to checkout</a>
           </div>
         </div>
       </div>
@@ -97,7 +94,14 @@
   <!--================End Cart Area =================-->
   
   <script>
+	function cDel(cnum, pname){
+		var num=cnum;
+		if(confirm(pname+"을(를) 장바구니에서 삭제하시겠습니까?")){
+			location.href="/cart/cDelete?cnum="+num;
 
+		}
+	}
+		
   </script>
   
   <%@include file ="/WEB-INF/views/include/footer.jsp" %>
