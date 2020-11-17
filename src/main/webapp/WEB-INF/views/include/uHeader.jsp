@@ -25,7 +25,7 @@
             <div class="row justify-content-center">
             
                 
-                <div class="col-lg-2 col-sm-5" onclick="location.href='/shop/shopOrderList'" style="cursor:pointer">
+                <div class="col-lg-2 col-sm-5" onclick="location.href='/user/uOrderList'" style="cursor:pointer">
                     <div class="single_feature_part">
                         <img src="/assets/img/icon/icon_2.png" alt="#">
                         <h4>My Order</h4>

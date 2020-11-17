@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
+import com.myproject.estore.dto.OrderDTO;
 import com.myproject.estore.dto.Role;
 import com.myproject.estore.dto.User;
+import com.myproject.estore.mapper.UserMapper;
 import com.myproject.estore.repository.AuthRepository;
 import com.myproject.estore.repository.UserRepository;
 
@@ -27,6 +29,9 @@ public class UserService {
 	private final AuthRepository aRepository;
 	@Autowired
 	private PasswordEncoder pwEncoder;
+	
+	@Autowired
+	private UserMapper uMapper;
 	
 	//회원 추가
 	@Transactional
@@ -59,5 +64,8 @@ public class UserService {
 		
 	}
 
-			
+	public List<OrderDTO> uOrderList(String uid){
+		return uMapper.uOList(uid);
+	}
+	
 }

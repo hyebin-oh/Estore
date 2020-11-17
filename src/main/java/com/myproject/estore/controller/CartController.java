@@ -40,6 +40,11 @@ public class CartController {
 	}
 	
 	//리스트
+	
+	
+	
+	
+
 	@GetMapping("cartList")
 	public String cartPage(Model model, Principal principal) {
 		String userid = principal.getName();
@@ -50,7 +55,7 @@ public class CartController {
 		return "/order/cartList";
 	}
 	
-	//삭제
+	//선택삭제
 	@GetMapping("cDelete")
 	public String cartDelete(Long cnum) {
 		System.out.println(cnum);

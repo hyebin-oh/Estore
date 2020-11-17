@@ -19,6 +19,7 @@ public class ProductDTO {
 	private String pdetail;
 	private MultipartFile uploadFile; 	
 	private Date create_date;
+
 	
 	private List<CartDTO> cart;
 	

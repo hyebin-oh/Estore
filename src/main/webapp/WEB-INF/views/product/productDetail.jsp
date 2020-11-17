@@ -28,13 +28,13 @@
         <div class="col-lg-12">
           <div class="product_img_slide owl-carousel">
             <div class="single_product_img">
-              <img src="../resources/upload/product/${product.pimg }" alt="#" class="img-fluid">
+              <img src="/resources/upload/product/${product.pimg }" alt="#" class="img-fluid">
             </div>
             <div class="single_product_img">
-              <img src="../resources/upload/product/${product.pimg }" alt="#" class="img-fluid">
+              <img src="/resources/upload/product/${product.pimg }" alt="#" class="img-fluid">
             </div>
             <div class="single_product_img">
-              <img src="../resources/upload/product/${product.pimg }" alt="#" class="img-fluid">
+              <img src="/resources/upload/product/${product.pimg }" alt="#" class="img-fluid">
             </div>
           </div>
         </div>
@@ -42,7 +42,11 @@
           <div class="single_product_text text-center">
             <input type="hidden" name="pnum" id="pnum" value="${product.pnum }">
             <input type="hidden" name="sid" id="sid" value="${product.sid }">
+            
+            <sec:authorize access="isAuthenticated()">
             <input type="hidden" name="userid" id="userid" value="<sec:authentication property='principal.username'/>">
+            </sec:authorize>
+            
             <h3>${product.pname }</h3>
             <p>${product.pdetail }</p>
             <div class="card_area">
@@ -53,9 +57,7 @@
                    	  <p>${product.price } won</p>
                    </div>               
                 </div>
-                
-                
-            
+       
                 <div class="product_count_area">
                     
                     <p>Quantity</p>

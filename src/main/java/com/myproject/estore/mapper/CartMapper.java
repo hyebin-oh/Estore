@@ -21,7 +21,9 @@ public interface CartMapper {
 	//갯수
 	public int cCount(String userid);
 	
-	//삭제
-	public int cDelete(Long cnum);
+	//선택삭제
+	public void cDelete(Long cnum);
 
+	//전체삭제
+	public void allDelete(String userid);
 }

@@ -66,7 +66,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-6">
                                 <div class="single-product mb-60">
                                     <div class="product-img">
-                                        <a href="/product/productDetail?pnum=${list.pnum }">
+                                        <a href="/product/productDetail/${list.pnum }">
                                     	<img src="../resources/upload/product/${list.pimg }" alt="" class="img-fluid"
                                    		  width="100%" height="100%"></a>
                                     </div>
@@ -79,7 +79,7 @@
                                             <i class="far fa-star low-star"></i>
                                         </div>
                                         
-                                        <h4><a href="/product/productDetail?pnum=${list.pnum }">${list.pname }</a></h4>
+                                        <h4><a href="/product/productDetail/${list.pnum }">${list.pname }</a></h4>
                                         <div class="price">
                                             <ul>
                                                 <li>${list.price }</li>

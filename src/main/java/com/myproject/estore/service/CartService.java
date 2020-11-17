@@ -29,10 +29,16 @@ public class CartService {
 		return 0;
 	}
 	
-	//삭제
-	public int cartDelete(Long cnum) {
-		return cMapper.cDelete(cnum);
+	//선택 삭제
+	public void cartDelete(Long cnum) {
+		cMapper.cDelete(cnum);
 		
+	}
+	
+	//주문완료시 전체 삭제
+	public void cartAllDel(String userid) {
+		System.out.println("userid : "+userid.length());
+		cMapper.allDelete(userid);
 	}
 
 }

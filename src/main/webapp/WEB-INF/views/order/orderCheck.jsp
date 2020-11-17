@@ -26,7 +26,7 @@
     <div class="container">
 		<br>
 		<br>
-<form class="row contact_form" action="#" method="post" novalidate="novalidate">
+<form class="row contact_form" action="/order/oSuccess" method="post" novalidate="novalidate">
       <div class="billing_details">
         <div class="row">
           <div class="col-lg-8">
@@ -46,7 +46,7 @@
               </div>
 
               <div class="col-md-12 form-group p_star">
-                <input type="text" class="form-control" id="addr" name="addr" value="${user.addr }" />
+                <input type="text" class="form-control" id="address" name="address" value="${user.addr }" />
               </div>
               
 			  <br>
@@ -69,10 +69,16 @@
               <c:set var="total" value="0" />
               <c:forEach items="${cart }" var="cart" varStatus="vs">
                 <input type="hidden" id="sid" name="sid" value="${cart.sid }">
+                
                 <li>
                  	 ${cart.pname }
-                    <span class="middle">${cart.count }</span>
-                    <span class="last">${cart.sum }</span>
+                 	 <input type="hidden" id="pname" name="pname" value="${cart.pname }">
+                    <span class="middle">${cart.count }
+                    <input type="hidden" id="pcount" name="pcount" value="${cart.count }">
+                    </span>
+                    <span class="last">${cart.sum }
+                    <input type="hidden" id="price" name="price" value="${cart.sum }">
+                    </span>
                 </li>
                 
               <c:set var = "total" value="${total + cart.sum }" />
@@ -93,15 +99,15 @@
                 <label for="f-option4">I read and accept the </label>
                 <a href="#">terms & conditions*</a>
               </div>
-              <a class="btn_3" href="#">Proceed to Paypal</a>
+              <input type="submit" class="btn_3" id="btnOrder">Proceed to Paypal</a>
             </div>       
           </div>
         </div>
-      </div>
-      
+      </div>     
       </form>
     </div>
   </section>
   <!--================End Checkout Area =================-->
+
 
 <%@include file ="/WEB-INF/views/include/footer.jsp" %>

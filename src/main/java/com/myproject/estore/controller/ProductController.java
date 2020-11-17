@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -89,8 +90,8 @@ public class ProductController {
 	}
 
 
-	@GetMapping("productDetail")
-	public String pDetail(Model model, Long pnum) {
+	@GetMapping("productDetail/{pnum}")
+	public String pDetail(Model model, @PathVariable Long pnum) {
 		ProductDTO product = pService.productDetail(pnum);
 		model.addAttribute("product", product);	
 		return "/product/productDetail";
@@ -127,11 +128,11 @@ public class ProductController {
 		product.setPimg(fileName);
 		pService.productUpdate(product);		
 		
-		return "redirect:/product/productDetail?pnum="+pnum;
+		return "redirect:/product/productDetail/"+pnum;
 	}
 	
 	
-	@GetMapping("/product/productDelete")
+	@GetMapping("productDelete")
 	public String pDelete(Long pnum) {
 		pService.productDelete(pnum);
 		return "redirect:/product/productList";

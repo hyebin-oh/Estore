@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
+import com.myproject.estore.dto.OrderDTO;
 import com.myproject.estore.dto.ProductDTO;
 import com.myproject.estore.dto.Role;
 import com.myproject.estore.dto.Shop;
@@ -36,6 +37,16 @@ public class ShopService {
 	//shop product list
 	public List<ProductDTO> shopPList(String sid) {
 		return sMapper.sPList(sid);
+	}
+	
+	//shop order list
+	public List<OrderDTO> shopOList(String sid){
+		return sMapper.sOList(sid);
+	}
+	
+	//shop 오늘의 주문 수
+	public int newOrderCount(String sid) {
+		return sMapper.newOcount(sid);
 	}
 	
 	

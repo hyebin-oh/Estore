@@ -17,6 +17,7 @@
 		<result property="pname" column="pname" />
 		<result property="price" column="price" />
 		<result property="count" column="count" />
+		<result property="sid" column="sid" />
 		<result property="sum" column="sum" />
 	</resultMap>
 	
@@ -26,13 +27,20 @@
 	</resultMap>
 	
 	<select id="cList" resultMap="cart">
-		select c.cnum, c.pnum, c.userid, c.pname, c.price, c.count, c.price*c.count sum, p.pimg
+		select c.cnum, c.pnum, c.userid, c.pname, c.price, c.count, c.price*c.count sum, c.sid, p.pimg
 		from cart c join product p on
 		c.pnum=p.pnum
 		where userid=#{userid}
 	</select>
  	
+ 	<!-- 선택 삭제 -->
  	<delete id="cDelete" parameterType="long">
- 		delete cart from cnum=#{cnum}
+ 		delete from cart where cnum=#{cnum}
+ 	</delete>
+ 	
+ 	
+ 	<!-- 전체삭제 -->
+ 	<delete id="allDelete" parameterType="String">
+ 		delete from cart where userid=#{userid}
  	</delete>
  </mapper>

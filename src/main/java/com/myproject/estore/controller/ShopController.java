@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
+import com.myproject.estore.dto.OrderDTO;
 import com.myproject.estore.dto.ProductDTO;
 import com.myproject.estore.dto.Shop;
 import com.myproject.estore.service.ShopService;
@@ -32,7 +33,10 @@ public class ShopController {
 	//mypage
 	//마이페이지로
 	@GetMapping("mypage")
-	public String mypage() {
+	public String mypage(Principal principal, Model model) {
+		String sid = principal.getName();
+		int newOcount = sService.newOrderCount(sid);
+		model.addAttribute("count", newOcount);
 		return "/shop/sMypage";
 	}
 	
@@ -47,7 +51,15 @@ public class ShopController {
 		return "/shop/shopProductList";
 	}
 	
-	
+	//shop newOrder
+	@GetMapping("sOrderList")
+	public String sOList(Principal principal, Model model) {
+		String sid= principal.getName();
+		List<OrderDTO> sOlist = sService.shopOList(sid);
+		model.addAttribute("sOlist", sOlist);
+		return "/shop/shopOrderList";
+	}
+
 	//shop 추가
 	@PostMapping("insert")
 	public String join(Shop shop, Auth auth) {

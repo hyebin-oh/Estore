@@ -14,9 +14,7 @@
                                     <h3>Today Order</h3>
                                  </div>
                                  <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder='Search Keyword'
-                                        onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Search Keyword'">
+                                 	<a href="/shop/sOrderList"><h4>New Order : ${count }</h4></a>
                                  </div>
                             </div>
     					</aside>
@@ -31,6 +29,7 @@
                                     <h3>This Week</h3>
                                  </div>
                                  <div class="input-group mb-3">
+                                 	<h4></h4>
                                     <input type="text" class="form-control" placeholder='Search Keyword'
                                         onfocus="this.placeholder = ''"
                                         onblur="this.placeholder = 'Search Keyword'">
