@@ -28,6 +28,9 @@ public class AuthService implements UserDetailsService{
 		aRepository.save(auth);
 	}
 	
+
+	
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		System.out.println("username : " + username);

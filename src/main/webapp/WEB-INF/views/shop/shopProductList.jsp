@@ -25,7 +25,7 @@
             </thead>
             <tbody>
              <c:forEach items="${list }" var="list" varStatus="vs">    
-              <tr style = "cursor:pointer;" onClick = "location.href='/product/productDetail?pnum=${list.pnum}' ">
+              <tr style = "cursor:pointer;" onClick = "location.href='/product/productDetail/${list.pnum}' ">
                 <td>${list.ptype }</td>
                 <td >
                   <div class="media">

@@ -2,28 +2,31 @@
     pageEncoding="UTF-8"%>
 <%@include file ="/WEB-INF/views/include/managerHeader.jsp" %>
  
- 
+<br><br><br>
+<h3 align = "center">My Order</h3>
+<br>
 <section class="cart_area section_padding">
     <div class="container">
 	
-	      <div class="cart_inner">
+	  <div class="cart_inner">
         <div class="table-responsive">
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">Ordernum</th>
                 <th scope="col">UserName(주문자이름)</th>
-                <th scope="col">product</th>
-                <th scope="col">price</th>
+                <th scope="col">UserID(주문자아이디)</th>
+                <th scope="col">Total Count</th>
+                <th scope="col">Total price</th>
                 <th scope="col">orderDate</th>
                 <th scope="col">orderState</th>
               </tr>
             </thead>
             <tbody>
              <c:forEach items="${sOlist }" var="list" varStatus="vs">
-              <tr>
+              <tr style = "cursor:pointer;" onClick = "location.href='/shop/orderDetail/${list.ordernum}'" >
                 <td>
-           		 <h5>${list.ordernum }</h5><!-- 상품명 -->
+           		 <h5>${list.ordernum }</h5>
                 </td>
                 
                 <td>
@@ -31,7 +34,11 @@
                 </td>
                 
                 <td>
-           		 <h5>${list.pname }</h5>
+           		 <h5>${list.userid}</h5>
+                </td>
+                                
+                <td>
+           		 <h5>${list.sum}</h5>
                 </td>
                 
                 <td>

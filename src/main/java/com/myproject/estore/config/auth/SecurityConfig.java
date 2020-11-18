@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                    .anyRequest().permitAll()
                .and() 
                    .formLogin() // 로그인 관한 설정
-                  // .loginPage("/loginform") // 로그인 페이지 링크
+                   //.loginPage("/loginform") // 로그인 페이지 링크
                    .defaultSuccessUrl("/")   //로그인 성공 후 리다이렉트할 주소 
                 //   .failureHandler(authenticationFailureHandler)
                .and()

@@ -43,7 +43,7 @@ public class UserService {
 		String encodepassword = pwEncoder.encode(rawpassword);
 		
 		user.setPassword(encodepassword);
-		System.out.println("encodepassword : "+user.getPassword());
+		//System.out.println("encodepassword : "+user.getPassword());
 		
 		//set은 AuthDTO인 Auth테이블에 해놓기
 		auth.setRole(Role.USER);
@@ -64,8 +64,35 @@ public class UserService {
 		
 	}
 
+	//유저 전체 주문 리스트
 	public List<OrderDTO> uOrderList(String uid){
 		return uMapper.uOList(uid);
+	}
+	
+	//유저 1달 주문 리스트
+	public List<OrderDTO> uMonthList(String uid){
+		return uMapper.uMonthList(uid);
+	}
+	
+	//정보수정
+	@Transactional
+	public void update(User user) {
+		User u2 = uRepository.findByEmail(user.getEmail())
+				.orElseThrow(()->{
+					return new IllegalArgumentException("수정 실패: 아이디 없음");
+				});
+		
+		String rawPass = user.getPassword();
+		String enPass = pwEncoder.encode(rawPass);
+		System.out.println(enPass);
+		
+		
+		u2.setAddr(user.getAddr());
+		u2.setName(user.getName());
+		u2.setPassword(enPass);
+		u2.setPhone(user.getPhone());
+		u2.setZipcode(user.getZipcode());
+		
 	}
 	
 }

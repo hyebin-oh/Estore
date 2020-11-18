@@ -3,7 +3,7 @@ var type = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
 $(function(){
 	//회원가입 선택
 	$("#preBtn").click(function(){
-		alert("선택");
+		//alert("선택");
 		if($("#agreechkbox").prop("checked")==false){
 			alert("필수 약관 동의를 체크해주세요.");
 			return false;
@@ -110,6 +110,7 @@ $(function(){
 		
 	});	
 	
+	//주소
 	$("#addr_checkBtn").click(function() {
          new daum.Postcode({
              oncomplete: function(data) {

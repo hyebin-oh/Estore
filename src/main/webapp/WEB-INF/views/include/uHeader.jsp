@@ -24,6 +24,12 @@
         <div class="container">
             <div class="row justify-content-center">
             
+                <div class="col-lg-2 col-sm-5" onclick="location.href='/user/uInfo'" style="cursor:pointer">
+                    <div class="single_feature_part">
+                        <a href="#"><img src="/assets/img/icon/feature_icon_1.svg" alt="#"></a>
+                        <h4>My Info</h4>
+                    </div>
+                </div>
                 
                 <div class="col-lg-2 col-sm-5" onclick="location.href='/user/uOrderList'" style="cursor:pointer">
                     <div class="single_feature_part">
@@ -48,5 +54,5 @@
                 </div>
             </div>
         </div>
-    </section>
+
     <!-- feature part end -->

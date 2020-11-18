@@ -20,4 +20,6 @@ public class OrderDTO {
 	private String pay;
 	private Date create_date;
 	private String orderstate;
+	private int sum;//주문 합산 수량
+	private int total;//주문 가격 합산
 }
