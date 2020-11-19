@@ -6,41 +6,43 @@
  <mapper namespace="com.myproject.estore.mapper.CartMapper">
  	
  	<insert id="cInsert" parameterType="com.myproject.estore.dto.CartDTO">
- 		insert into cart(pnum, userid, pname, price, count, sid)
- 		values(#{pnum}, #{userid}, #{pname}, #{price}, #{count}, #{sid} )
+ 		insert into cart(pnum, userid, pname, price, count, sid, sname)
+       values(#{pnum}, #{userid}, #{pname}, #{price}, #{count}, #{sid}, #{sname} )
  	</insert>
 
-	<resultMap type="com.myproject.estore.dto.CartDTO" id="cart">
-		<result property="cnum" column="cnum" />
-		<result property="pnum" column="pnum" />
-		<result property="userid" column="userid" />
-		<result property="pname" column="pname" />
-		<result property="price" column="price" />
-		<result property="count" column="count" />
-		<result property="sid" column="sid" />
-		<result property="sum" column="sum" />
-	</resultMap>
-	
-	<resultMap type="com.myproject.estore.dto.ProductDTO" id="product">
-		<id property="pnum" column="pnum" />
-		<result property="pimg" column="pimg" />
-	</resultMap>
-	
-	<select id="cList" resultMap="cart">
-		select c.cnum, c.pnum, c.userid, c.pname, c.price, c.count, c.price*c.count sum, c.sid, p.pimg
-		from cart c join product p on
-		c.pnum=p.pnum
-		where userid=#{userid}
-	</select>
+	 <resultMap type="com.myproject.estore.dto.CartDTO" id="cart">
+      <result property="cnum" column="cnum" />
+      <result property="pnum" column="pnum" />
+      <result property="userid" column="userid" />
+      <result property="pname" column="pname" />
+      <result property="price" column="price" />
+      <result property="count" column="count" />
+      <result property="sid" column="sid" />
+      <result property="sum" column="sum" />      
+      <result property="sname" column="sname" />
+   </resultMap>
+   
+   <resultMap type="com.myproject.estore.dto.ProductDTO" id="product">
+      <id property="pnum" column="pnum" />
+      <result property="pimg" column="pimg" />
+   </resultMap>
+   
+   <select id="cList" resultMap="cart">
+      select c.cnum, c.pnum, c.userid, c.pname, c.price, c.count, c.price*c.count sum, c.sid, p.pimg, c.sname
+      from cart c join product p on
+      c.pnum=p.pnum
+      where userid=#{userid}
+   </select>
+   
+       <!-- 선택 삭제 -->
+    <delete id="cDelete" parameterType="long">
+       delete from cart where cnum=#{cnum}
+    </delete>
+    
+    
+    <!-- 전체삭제 -->
+    <delete id="allDelete" parameterType="String">
+       delete from cart where userid=#{userid}
+    </delete>
  	
- 	<!-- 선택 삭제 -->
- 	<delete id="cDelete" parameterType="long">
- 		delete from cart where cnum=#{cnum}
- 	</delete>
- 	
- 	
- 	<!-- 전체삭제 -->
- 	<delete id="allDelete" parameterType="String">
- 		delete from cart where userid=#{userid}
- 	</delete>
  </mapper>

@@ -32,4 +32,8 @@ public class AuthEntity {
 		this.password=password;
 		this.role=role;
 	}
+	
+	public String getRoleKey() {
+	       return this.role.getKey();
+	}
 }

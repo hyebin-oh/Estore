@@ -2,6 +2,7 @@ package com.myproject.estore.config.auth;
 
 import java.util.Collections;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.myproject.estore.config.auth.dto.SessionUser;
 import com.myproject.estore.dto.User;
+import com.myproject.estore.repository.AuthRepository;
 import com.myproject.estore.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 	
    private final UserRepository userRepository;
+   private final AuthRepository authRepository;
    private final HttpSession httpSession;
    
    @Override
@@ -53,7 +56,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
        User user = userRepository.findByEmail(attributes.getEmail())
                .map(entity -> entity.update(attributes.getName(),attributes.getPicture()))
                .orElse(attributes.toEntity());
-
        return userRepository.save(user);
    }
 

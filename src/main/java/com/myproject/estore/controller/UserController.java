@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
 import com.myproject.estore.dto.OrderDTO;
+import com.myproject.estore.dto.QnADTO;
 import com.myproject.estore.dto.Role;
 import com.myproject.estore.dto.User;
 import com.myproject.estore.service.AuthService;
@@ -40,6 +41,8 @@ public class UserController {
 	//@RequiredArgsConstructor + final = @Autowired
 	private final UserService uService;
 	
+	@Autowired
+	private AuthService aService;
 	
 	@Autowired
 	private PasswordEncoder pwEncoder;
@@ -79,6 +82,19 @@ public class UserController {
 		return "/user/uOrderList";
 	}
 	
+	//유저 주문 디테일
+	@GetMapping("uOdetail/{ordernum}")
+	public String uOdetail(Model model, @PathVariable String ordernum, Principal principal) {
+		String uid = principal.getName();
+		OrderDTO info = uService.uOdetailInfo(uid, ordernum);
+		List<OrderDTO> list = uService.uOdetailList(uid, ordernum);
+		model.addAttribute("info", info);
+		model.addAttribute("list", list);		
+		
+		return "/user/uOrderDetail";
+	}
+	
+	
 	//비밀번호 체크
 	@GetMapping("pCheck")
 	@ResponseBody
@@ -105,28 +121,20 @@ public class UserController {
 		return "/user/uMyinfo";
 	}
 	
-	
-	//추가
-	@PostMapping("insert")
-	public String join(User user, Auth auth) {
-		uService.save(user, auth);		
-		return "loginform";
+	//userQnA
+	@GetMapping("uQnA")
+	public String uQnA(Principal principal, Model model) {
+		String umail = principal.getName();
+		List<QnADTO> list = uService.uQlist(umail);
+		model.addAttribute("qList", list);
+		return "/user/uQnA";
 	}
 	
-	//이메일 중복 확인
-	@PostMapping("emailCheck")
-	@ResponseBody
-	public String emailCheck(HttpServletRequest request,@RequestParam String email) {
-		User user = uService.EmailCheck(email);
-		String result="";
-		
-		if(user!=null) result="no";
-		else result="yes";
-		return result;		
+	//Qdetail
+	@GetMapping("uQdetail/{qnum}")
+	public String uQdetail(Model model, @PathVariable int qnum ) {
+		return "/user/uQdetail";
 	}
-	
-	
-
 	
 	
 }

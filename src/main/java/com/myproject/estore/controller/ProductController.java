@@ -1,6 +1,7 @@
 package com.myproject.estore.controller;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
@@ -18,11 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.myproject.estore.dto.ProductDTO;
+import com.myproject.estore.dto.Shop;
 import com.myproject.estore.service.ProductService;
+import com.myproject.estore.service.ShopService;
 
 @Controller
 @RequestMapping("/product/")
@@ -30,8 +32,15 @@ public class ProductController {
 	@Autowired
 	private ProductService pService;
 	
+	@Autowired
+	private ShopService sService;
+	
 	@GetMapping("productInsert")
-	public String toPInsert() {
+	public String toPInsert(Model model, Principal principal) {
+		String email = principal.getName();
+		Shop shop = sService.EmailCheck(email);
+		System.out.println("sname" + shop.getName());
+		model.addAttribute("shop", shop);
 		return "/product/productInsert";
 	}
 	
@@ -94,6 +103,7 @@ public class ProductController {
 	public String pDetail(Model model, @PathVariable Long pnum) {
 		ProductDTO product = pService.productDetail(pnum);
 		model.addAttribute("product", product);	
+		System.out.println("detail "+ product.getSname());
 		return "/product/productDetail";
 	}
 	
@@ -108,9 +118,11 @@ public class ProductController {
 	@PostMapping("productUpdate")
 	public String pUpdate(ProductDTO product, HttpServletRequest request, Long pnum) throws IOException {
 		String fileName="";
+		String rawfileName = product.getPimg();
 		MultipartFile uploadFile = product.getUploadFile();
+		
 		if(uploadFile.isEmpty()) {
-
+			product.setPimg(rawfileName);				
 		}else {			
 			String originalFileName=uploadFile.getOriginalFilename();			
 			String ext = FilenameUtils.getExtension(originalFileName); //확장자구하기
@@ -122,12 +134,12 @@ public class ProductController {
 			//파일 서버 저장 경로
 			String root_path = request.getSession().getServletContext().getRealPath("/");
 			String attach_path = "resources/upload/product/"; //webapp 아래의 resources 파일
-			uploadFile.transferTo(new File(root_path+attach_path+fileName));		
+			uploadFile.transferTo(new File(root_path+attach_path+fileName));
+			product.setPimg(fileName);	
 		}
 		
-		product.setPimg(fileName);
-		pService.productUpdate(product);		
-		
+			
+		pService.productUpdate(product);			
 		return "redirect:/product/productDetail/"+pnum;
 	}
 	

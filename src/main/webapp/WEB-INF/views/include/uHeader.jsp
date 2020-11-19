@@ -39,7 +39,7 @@
                 </div>
  
                 
-                <div class="col-lg-2 col-sm-5" onclick="location.href='/shop/shopQnA'" style="cursor:pointer">
+                <div class="col-lg-2 col-sm-5" onclick="location.href='/user/uQnA'" style="cursor:pointer">
                     <div class="single_feature_part">
                         <img src="/assets/img/icon/icon_4.png" alt="#">
                         <h4>QnA</h4>
@@ -54,5 +54,5 @@
                 </div>
             </div>
         </div>
-
+</section>
     <!-- feature part end -->

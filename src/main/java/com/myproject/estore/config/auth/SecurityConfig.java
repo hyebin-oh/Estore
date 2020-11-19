@@ -50,10 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                    .antMatchers("/user/**").access("hasRole('ROLE_USER')")
                    .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                    .antMatchers("/manager/**").access("hasRole('ROLE_MANAGER')")
-                   .anyRequest().permitAll()
+                   .antMatchers("/**").permitAll()
                .and() 
                    .formLogin() // 로그인 관한 설정
-                   //.loginPage("/loginform") // 로그인 페이지 링크
+                  // .loginPage("/loginform") // 로그인 페이지 링크
                    .defaultSuccessUrl("/")   //로그인 성공 후 리다이렉트할 주소 
                 //   .failureHandler(authenticationFailureHandler)
                .and()
@@ -63,8 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                        .invalidateHttpSession(true) //세션 날리기 true
                .and()
                    .oauth2Login()
-                       .userInfoEndpoint()
+                       .userInfoEndpoint()                  
                            .userService(customOAuth2UserService);
+       
 
    }
    

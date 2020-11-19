@@ -1,6 +1,8 @@
 package com.myproject.estore.service;
 
-import java.util.List;
+import java.util.List
+;
+import java.util.Optional;
 
 import javax.servlet.annotation.ServletSecurity.EmptyRoleSemantic;
 import javax.transaction.Transactional;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
 import com.myproject.estore.dto.OrderDTO;
+import com.myproject.estore.dto.QnADTO;
 import com.myproject.estore.dto.Role;
 import com.myproject.estore.dto.User;
 import com.myproject.estore.mapper.UserMapper;
@@ -52,18 +55,16 @@ public class UserService {
 		aRepository.save(authEntity);
 		uRepository.save(user);
 	}
-	
+	   
 	public List<User> findAllDesc(){
 		return uRepository.findAll();
 	}
 	
+	//이메일 체크 
 	public User EmailCheck(String email) {
-		System.out.println(uRepository.findByemail(email));
-		User user = uRepository.findByemail(email);
-		return user;
-		
+		User user = uRepository.findByUseremail(email);
+		return user;      
 	}
-
 	//유저 전체 주문 리스트
 	public List<OrderDTO> uOrderList(String uid){
 		return uMapper.uOList(uid);
@@ -82,6 +83,12 @@ public class UserService {
 					return new IllegalArgumentException("수정 실패: 아이디 없음");
 				});
 		
+//		AuthEntity a2 = aRepository.findByEmail(auth.getEmail())
+//				.orElseThrow(()->{
+//					return new IllegalArgumentException("수정 실패: 아이디 없음");
+//				});
+		
+		
 		String rawPass = user.getPassword();
 		String enPass = pwEncoder.encode(rawPass);
 		System.out.println(enPass);
@@ -91,8 +98,28 @@ public class UserService {
 		u2.setName(user.getName());
 		u2.setPassword(enPass);
 		u2.setPhone(user.getPhone());
-		u2.setZipcode(user.getZipcode());
+		u2.setZipcode(user.getZipcode());	
 		
+//		Auth a = new Auth();
+//		a.setPassword(enPass);
+		
+		
+		
+	}
+	
+	//order상세보기 - 고객정보
+	public OrderDTO uOdetailInfo(String uid, String ordernum) {
+		return uMapper.uOdetailInfo(uid, ordernum);
+	}
+	
+	//order상세보기 - 제품 리스트
+	public List<OrderDTO> uOdetailList(String uid, String ordernum){
+		return uMapper.uOdetailList(uid, ordernum);
+	}
+	
+	//qna작성 보기
+	public List<QnADTO> uQlist(String email){
+		return uMapper.uQList(email);
 	}
 	
 }

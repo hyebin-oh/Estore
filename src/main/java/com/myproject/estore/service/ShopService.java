@@ -13,9 +13,9 @@ import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
 import com.myproject.estore.dto.OrderDTO;
 import com.myproject.estore.dto.ProductDTO;
+import com.myproject.estore.dto.QnADTO;
 import com.myproject.estore.dto.Role;
 import com.myproject.estore.dto.Shop;
-import com.myproject.estore.dto.User;
 import com.myproject.estore.mapper.ShopMapper;
 import com.myproject.estore.repository.AuthRepository;
 import com.myproject.estore.repository.ShopRepository;
@@ -27,20 +27,17 @@ import lombok.RequiredArgsConstructor;
 public class ShopService {
 	private final ShopRepository sRepository;
 	private final AuthRepository aRepository;
-	
 	@Autowired
 	private PasswordEncoder pwEncoder;
 	
 	@Autowired
 	private ShopMapper sMapper;
 	
-	
 	//shop product list
-	public List<ProductDTO> shopPList(String sid) {
-		return sMapper.sPList(sid);
-	}
-	
-	//shop order list
+		public List<ProductDTO> shopPList(String sid) {
+			return sMapper.sPList(sid);
+		}
+
 	public List<OrderDTO> shopOList(String sid){
 		return sMapper.sOList(sid);
 	}
@@ -55,9 +52,40 @@ public class ShopService {
 		return sMapper.sOdetailList(sid, ordernum);
 	}
 	
+	//order상세보기 수정
+	public int sOupdate(OrderDTO order) {
+		return sMapper.oUpdate(order);
+		
+	}
+	
 	//shop 오늘의 주문 수
 	public int newOrderCount(String sid) {
 		return sMapper.newOcount(sid);
+	}
+	
+	//오늘 주문 합계
+	public int newOsum(String sid) {
+		return sMapper.newOsum(sid);
+	}
+	
+	//이번주 주문 수
+	public int weekOCount(String sid) {
+		return sMapper.weekOcount(sid);
+	}
+	
+	//이번주 주문 합계
+	public int weekOsum(String sid) {
+		return sMapper.weekOsum(sid);
+	}
+	
+	//shop qlist
+	public List<QnADTO> sQlist(String sid){
+		return sMapper.sQList(sid);
+	}
+	
+	//오늘 qna 수
+	public int tqlist(String sid) {
+		return sMapper.todayQlist(sid);
 	}
 	
 	//shop 정보수정
@@ -80,9 +108,8 @@ public class ShopService {
 		s2.setZipcode(shop.getZipcode());		
 	}
 	
-	
 	public Shop EmailCheck(String email){
-		Shop shop = sRepository.findByemail(email);
+		Shop shop = sRepository.findByShopemail(email);
 		return shop;
 	}
 	

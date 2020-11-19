@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file ="/WEB-INF/views/include/managerHeader.jsp" %>
+<%@include file ="/WEB-INF/views/include/aHeader.jsp" %>
  
  
     <section class="latest-product-area latest-padding">

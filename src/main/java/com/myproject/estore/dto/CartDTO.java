@@ -13,6 +13,7 @@ public class CartDTO {
 	private int count;
 	private String sid;
 	private int sum;
+	private String sname;
 	
 	private String pimg; //product 테이블의 pimg
 }

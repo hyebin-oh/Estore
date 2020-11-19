@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +22,8 @@ import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
 import com.myproject.estore.dto.OrderDTO;
 import com.myproject.estore.dto.ProductDTO;
+import com.myproject.estore.dto.QnADTO;
 import com.myproject.estore.dto.Shop;
-import com.myproject.estore.dto.User;
 import com.myproject.estore.service.ShopService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,12 +40,27 @@ public class ShopController {
 	@GetMapping("mypage")
 	public String mypage(Principal principal, Model model) {
 		String sid = principal.getName();
+		
+		//오늘 주문
 		int newOcount = sService.newOrderCount(sid);
+		int newOsum = sService.newOsum(sid);
+		
+		//이번주 주문
+		int weekOcount = sService.weekOCount(sid);
+		int weekOsum = sService.weekOsum(sid);
+		
+		//오늘 qna
+		int todayQcount = sService.tqlist(sid);
+		
 		model.addAttribute("count", newOcount);
+		model.addAttribute("sum", newOsum );
+		model.addAttribute("wCount", weekOcount);
+		model.addAttribute("wSum", weekOsum);
+		model.addAttribute("tQcount", todayQcount);
 		return "/shop/sMypage";
 	}
 	
-	//sInfo mypage
+	//sInfo
 	@GetMapping("sInfo")
 	public String sMyinfo(Principal principal, Model model) {
 		String email = principal.getName();
@@ -54,6 +68,7 @@ public class ShopController {
 		model.addAttribute("sInfo",shop);
 		return "/shop/shopInfo";
 	}
+	
 	
 	//sInfo mypage passwordCheck
 	@GetMapping("pCheck")
@@ -82,7 +97,7 @@ public class ShopController {
 	
 	//shop 주문 상세보기
 	@GetMapping("orderDetail/{ordernum}")
-	public String sOdetail(Model model, @PathVariable String ordernum, Principal principal) {
+	public String sOdetail(Principal principal, Model model, @PathVariable String ordernum) {
 		String sid = principal.getName();
 		OrderDTO info = sService.sOdetailInfo(sid, ordernum);
 		List<OrderDTO> list = sService.sOdetailList(sid, ordernum);
@@ -91,7 +106,13 @@ public class ShopController {
 		return "/shop/sOderDetail";
 	}
 	
-	
+	//shop 주문 수정
+	@PostMapping("sOupdate")
+	@ResponseBody
+	public String sOupdate(@RequestParam Long onum, OrderDTO order) {
+		sService.sOupdate(order);
+		return "success";
+	}
 	
 	//Myproduct List
 	@GetMapping("sProduct")
@@ -111,7 +132,19 @@ public class ShopController {
 		model.addAttribute("sOlist", sOlist);
 		return "/shop/shopOrderList";
 	}
+	
+	//shop qna 리스트
+	@GetMapping("sQnA")
+	public String sQlsit(Principal principal, Model model) {
+		String sid = principal.getName();
+		//System.out.println("sid:" + sid);
+		List<QnADTO> sQlist = sService.sQlist(sid);
+		model.addAttribute("sQlist", sQlist);
+		System.out.println(sQlist);
+		return "/shop/shopQnA";
+	}
 
+	
 	//shop 추가
 	@PostMapping("insert")
 	public String join(Shop shop, Auth auth) {

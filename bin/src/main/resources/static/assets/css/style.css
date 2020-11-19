@@ -7420,13 +7420,14 @@ del {
 .progress-table {
   background: #f9f9ff;
   padding: 15px 0px 30px 0px;
-  min-width: 800px;
+  width: 80%;
 }
 
 /* line 329, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_elements.scss */
 .progress-table .serial {
   width: 11.83%;
   padding-left: 30px;
+  text-align:center;
 }
 
 /* line 333, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_elements.scss */
@@ -7458,7 +7459,8 @@ del {
   color: #415094;
   line-height: 40px;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight:700;
+  font-style: bold;
 }
 
 /* line 355, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_elements.scss */
@@ -7474,7 +7476,7 @@ del {
 .progress-table .table-row .visit,
 .progress-table .table-row .percentage {
   display: flex;
-  align-items: center;
+  text-align:center;
 }
 
 /* line 367, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_elements.scss */

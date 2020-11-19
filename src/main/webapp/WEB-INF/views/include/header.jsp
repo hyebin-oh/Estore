@@ -98,17 +98,17 @@
                                 </div>
                                 <div class="header-info-right">
                                    <ul>
-                                   	   <li>
+                                    	   <li>
 		                                   	<sec:authorize access="isAuthenticated()">
 												<span id="welcom"><a>Welcome! <sec:authentication property="principal.username"/></a></span>
 											</sec:authorize>
-                                   	   
-                                   	   </li> 
+                                   	   		
+                                   	   </li>  
                                    	   
                                    	   <!-- MY PAGE 경로 -->
                                    	   <sec:authorize access="isAnonymous()" >                                      
                                       	 <li><a href="/loginform">My Page </a></li>
-                                       </sec:authorize>
+                                       </sec:authorize> 
                                        
                                        <sec:authorize access="hasRole('ROLE_USER') and isAuthenticated()">
 												<li><a href="/user/mypage">My Page</a></li>   
@@ -175,11 +175,11 @@
                                                     <li><a href="javascript:type('목걸이')">목걸이</a></li>
                                                 </ul>
                    							</li>
-                                            <li><a href="#">Community</a>
+                                            <li><a href="/notice/list"">Community</a>
 	                                            <ul class="submenu">
-	                                                 <li><a href="#">Notice</a></li>
-	                                                 <li><a href="#">QnA</a></li>
-	                                                 <li><a href="#">Review</a></li>
+	                                                 <li><a href="/notice/list">Notice</a></li>
+	                                                 <li><a href="/qna/list">QnA</a></li>
+	                                                 <li><a href="/review/list">Review</a></li>
 	                                            </ul>
          
                                             <li><a href="/contact">Contact</a></li>
@@ -210,12 +210,12 @@
 	                                  	  </li>
                                   </sec:authorize>	  
                                   	 
-                                  	 <!-- 
+                                  	  
                               		<sec:authorize access="isAuthenticated()">  
 	                                  	  <li class="d-none d-lg-block"> 
 	                                  	    <a href="/logout" class="btn header-btn">Sign out</a>
 	                                  	  </li>
-                                  	</sec:authorize> -->
+                                  	</sec:authorize> 
                                   	
                                 </ul>
                             </div>

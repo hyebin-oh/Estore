@@ -19,6 +19,12 @@ public class CartService {
 		
 	}
 	
+   //주문완료시 전체 삭제
+   public void cartAllDel(String userid) {
+      System.out.println("userid : "+userid.length());
+      cMapper.allDelete(userid);
+   }
+   
 	//리스트
 	public List<CartDTO> cartList(String userid){
 		return cMapper.cList(userid);
@@ -29,16 +35,10 @@ public class CartService {
 		return 0;
 	}
 	
-	//선택 삭제
+	//삭제
 	public void cartDelete(Long cnum) {
 		cMapper.cDelete(cnum);
 		
-	}
-	
-	//주문완료시 전체 삭제
-	public void cartAllDel(String userid) {
-		System.out.println("userid : "+userid.length());
-		cMapper.allDelete(userid);
 	}
 
 }

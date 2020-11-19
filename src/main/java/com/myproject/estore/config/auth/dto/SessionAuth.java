@@ -14,12 +14,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class SessionAuth implements Serializable {
 	private String email;
-	private String password;
-	private Role role;
 	
-	public SessionAuth(Auth auth) {
-		this.email=auth.getEmail();
-		this.password=auth.getPassword();
-		this.role=auth.getRole();
-	}
 }

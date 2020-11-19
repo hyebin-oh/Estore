@@ -28,8 +28,12 @@ public class AuthService implements UserDetailsService{
 		aRepository.save(auth);
 	}
 	
-
-	
+	//이메일 체크 
+   public Optional<AuthEntity> EmailCheck(String email) {
+      System.out.println(aRepository.findByEmail(email));
+      Optional<AuthEntity> auth = aRepository.findByEmail(email);
+      return auth;      
+   }
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) {
@@ -38,8 +42,8 @@ public class AuthService implements UserDetailsService{
 		Optional<AuthEntity> authEntity = aRepository.findByEmail(username);
 		AuthEntity aEntity = authEntity.get();
 		System.out.println("role : " + aEntity.getRole());
-		System.out.println("rolekey "+ aEntity.getRole().getKey());
-		
+		System.out.println("role3 : " + aEntity.getRole().getKey());
+		System.out.println("role2 : " + Role.MANAGER.getKey());
 		
 		
 		//롤 부여하기
@@ -47,7 +51,7 @@ public class AuthService implements UserDetailsService{
 
 	    String role = aEntity.getRole().toString();
 	    
-        if (role.equals("ADMIN")) 
+        if (("admin@admin.com").equals(username)) 
             authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getKey()));
         else if (role.equals("MANAGER"))
             authorities.add(new SimpleGrantedAuthority(Role.MANAGER.getKey()));

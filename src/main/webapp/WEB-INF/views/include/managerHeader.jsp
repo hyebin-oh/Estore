@@ -11,6 +11,8 @@
                 <div class="col-xl-12">
                     <div class="hero-cap text-center">
                         <h2><sec:authentication property="principal.username"/>'s Page</h2>
+                        
+                        
                     </div>
                 </div>
             </div>

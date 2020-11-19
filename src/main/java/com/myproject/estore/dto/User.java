@@ -24,10 +24,9 @@ public class User  {
 	 
 	   @Column(nullable = false)
 	   private String name;
-	   @Column
-	   private String password;
-
 	   
+	   @Column
+	   private String password;	
 	   
 	   @Column
 	   private String addr;
@@ -63,6 +62,4 @@ public class User  {
 	   public String getRoleKey() {
 	       return this.role.getKey();
 	   }
-
-
 }

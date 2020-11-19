@@ -10,16 +10,16 @@ import com.myproject.estore.dto.OrderDTO;
 @Repository
 @Mapper
 public interface OrderMapper {
-	
-	@Insert("insert into onum values()")
-	public int putNum();
-	
-	@Select("select max(onum) from onum")
-	public int getNum();
+	 @Insert("insert into onum values()")
+	   public int putNum();
+	   
+	   @Select("select max(onum) from onum")
+	   public int getNum();
 
-	@Insert("insert into ordering"
-			+ "(ordernum, sid, pname, pcount, price, userid, name, address, phone, pay)"
-			+ "values(#{ordernum}, #{sid}, #{pname}, #{pcount},#{price},"
-			+ "#{userid}, #{name}, #{address}, #{phone}, '카드')")
-	public int oSuccess(OrderDTO order);
+	   @Insert("insert into ordering"
+	         + "(ordernum, sid, pname, pcount, price, userid, name, address, phone, pay, sname, pnum)"
+	         + "values(#{ordernum}, #{sid}, #{pname}, #{pcount},#{price},"
+	         + "#{userid}, #{name}, #{address}, #{phone}, '카드', #{sname}, #{pnum})")
+	   public int oSuccess(OrderDTO order);
+	   
 }

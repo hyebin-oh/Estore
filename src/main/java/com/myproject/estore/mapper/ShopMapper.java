@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.myproject.estore.dto.OrderDTO;
 import com.myproject.estore.dto.ProductDTO;
+import com.myproject.estore.dto.QnADTO;
 
 @Repository
 @Mapper
@@ -32,10 +34,33 @@ public interface ShopMapper {
 			+ "where ordernum=#{ordernum} and sid=#{sid}")
 	public List<OrderDTO> sOdetailList(String sid, String ordernum);
 	
+	//주문 내역 수정
+	@Update("update ordering set orderstate=#{orderstate} where onum=#{onum}")
+	public int oUpdate(OrderDTO order);
+	
 	//오늘 판매 수량
 	@Select("select count(*) from ordering where sid=#{sid} "
 			+ "and DATE_FORMAT(create_date, '%Y-%m-%d') = CURDATE()")
 	public int newOcount(String sid);
+	
+	//오늘 판매 금액
+	@Select("select sum(price) from ordering where sid=#{sid} "
+			+ "and DATE_FORMAT(create_date, '%Y-%m-%d') = CURDATE()")
+	public int newOsum(String sid);
+	
+	//이번주 판매 수량
+	@Select("SELECT count(*) FROM ordering WHERE create_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW()")
+	public int weekOcount(String sid);
+	
+	//이번주 판매 금액
+	@Select("SELECT sum(price) FROM ordering WHERE create_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW()")
+	public int weekOsum(String sid);
+	
+	//가게 상품 qna 리스트
+	public List<QnADTO> sQList(String sid);
+	
+	//오늘 qna 갯수
+	public int todayQlist(String sid);
 	
 	
 }

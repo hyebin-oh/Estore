@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,26 +17,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.myproject.estore.dto.Auth;
+import com.myproject.estore.dto.AuthEntity;
 import com.myproject.estore.dto.CartDTO;
 import com.myproject.estore.dto.OrderDTO;
 import com.myproject.estore.dto.User;
+import com.myproject.estore.service.AuthService;
 import com.myproject.estore.service.CartService;
 import com.myproject.estore.service.OrderService;
 import com.myproject.estore.service.UserService;
 
 @Controller
 @RequestMapping("/order/")
-public class OrderController {
-	
-	@Autowired
-	private UserService uService;
-	
+public class OrderController {		
 	@Autowired
 	private CartService cService;
 
 	@Autowired
 	private OrderService oService;
 	
+	@Autowired
+	private UserService uService;
+	
+	//주문 내용체크
 	@GetMapping("oCheck")
 	public String oderCheck(Model model, Principal principal) {
 		
@@ -47,8 +51,8 @@ public class OrderController {
 		
 		//cartList
 		List<CartDTO> cart = cService.cartList(userid);
-		model.addAttribute("cart", cart);
 		
+		model.addAttribute("cart", cart);
 		
 		return "/order/orderCheck";
 	}
@@ -71,6 +75,7 @@ public class OrderController {
 		String pname[] = request.getParameterValues("pname");
 		String pcount[] = request.getParameterValues("pcount");
 		String price[] = request.getParameterValues("price");
+		String sname[] = request.getParameterValues("sname");
 		
 		
 		for(int i=0; i<sid.length; i++) {
@@ -80,6 +85,7 @@ public class OrderController {
 			order.setPcount(pcount[i]);
 			order.setPrice(price[i]);
 			order.setUserid(userid);
+			order.setSname(sname[i]);
 			oService.orderSuccess(order);
 		}
 		

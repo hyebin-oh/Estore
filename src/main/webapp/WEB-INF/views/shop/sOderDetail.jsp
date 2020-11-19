@@ -39,7 +39,7 @@
                &nbsp;
               </li>
               <li>
-                <p>address : ${info.address }</p>
+                <p>address : <span>${info.address }</span></p>
               </li>
               <li>
                  &nbsp;
@@ -68,21 +68,29 @@
               <tbody>
                <c:set var="total" value="0" />
                <c:forEach items="${list }" var="list" varStatus="vs"> 
-                <input type="hidden" id="onum" name="onum" id="${list.onum }">
-                <tr>             	  
+               
+                <tr>  
+               	  
                   <th><span>${list.pname }</span></th>
                   <th>${list.pcount }</th>
                   <th> <span>${list.price }</span></th>
                   <th>
-				  	<div class="default-select" id="default-select">
-						<select id="orderstate" name="orderstate">
-							<option value="주문완료">주문완료</option>
-							<option value="상품준비중">상품준비중</option>
-							<option value="발송완료">발송완료</option>
-							<option value="배송완료">배송완료</option>
+					 
+				  	<div >				  	  
+				  	  <c:set var="option" value="${list.orderstate }" />
+				  	   <input type="hidden" id="onum${vs.index }" name="onum" value="${list.onum }"> 
+				  	  	<select id="state${vs.index }" onchange="updateOption(${vs.index })" >
+							<option value="주문완료" <c:if test="${option eq '주문완료'}">selected</c:if>>주문완료</option>
+							<option value="상품준비중" <c:if test="${option eq '상품준비중'}">selected</c:if>>상품준비중</option>
+							<option value="발송완료" <c:if test="${option eq '발송완료'}">selected</c:if>>발송완료</option>
+							<option value="배송완료" <c:if test="${option eq '배송완료'}">selected</c:if>>배송완료</option>
 						</select>
+									
 					</div>
+					<span id="update${vs.index }"></span>
+
 				  </th>
+				  
                 </tr>
                 <c:set var = "total" value="${total + list.pcount }" />
 			   </c:forEach>
@@ -96,26 +104,47 @@
                 </tr>
               </tfoot>
             </table>
+
           </div>
+                      
+            <div>
+            	<button onclick="location.href='/shop/sOrderList'">수정완료</button>
+            </div>
+            
         </div>
       </div>
     </div>
     <div>
-    	<button onclick="javascript:oChange('${list.onum}','${list.orderstate }')">수정완료</button>
 	</div>
-</section><!-- 헤더 섹션닫음 -->
+</section>
+</section><!-- header 섹션 -->
 <%@include file ="/WEB-INF/views/include/footer.jsp" %>
+
 <script>
-	$("orderstate option").each(function(){
-		if($(this).val()=="${list.orderstate}"){
-			$(this).prop("selected", true);
-		}
-	});
 
+	var index="";
+	var option="";
+	var onum="";
+	function updateOption(index){
+		this.index = index;
+		this.option = $("#state"+ index + " option:selected").val();	
+		this.onum=$("#onum"+ index).val();
+		console.log('순서'+index+', 변경옵션'+option+', onum: '+onum);
 
-	function oChange(onum, oderstate){
-		alert(orderstate);
+			$.ajax({
+				type: "post",
+				url: "/shop/sOupdate",
+				data:{"onum":onum, "orderstate":option}
+				
+			})
+			.done(function(resp){
+				$("#update"+index).html("수정완료");
+				//location.href="/shop/sOrderList";
+			})
+			.fail(function(error){
+				alert(error);
+			})
 	}
-</script>
 
+</script>
 
