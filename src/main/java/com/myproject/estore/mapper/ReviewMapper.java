@@ -11,8 +11,8 @@ import com.myproject.estore.dto.ReviewDTO;
 @Repository
 @Mapper
 public interface ReviewMapper {
-	@Insert("insert into review(pnum, title, content, email, rate) "
-			+ "values(#{pnum}, #{title}, #{content}, #{email}, #{rate})")
+	@Insert("insert into review(pnum, title, content, email, rate, onum, sid) "
+			+ "values(#{pnum}, #{title}, #{content}, #{email}, #{rate}, #{onum}, #{sid})")
 	//추가
 	public void rInsert(ReviewDTO review);
 	//수정
@@ -25,4 +25,10 @@ public interface ReviewMapper {
 	public void rDelete(int rnum);
 	//product에 따른 상세보기
 	public List<ReviewDTO> rfindByPnum(int pnum);
+	//onum에 따른 list
+	public ReviewDTO rfindByOnum(int onum);
+	//review 수
+	public int rCount(int rnum);
+	//오늘 리뷰 수
+	public int sysCount();
 }

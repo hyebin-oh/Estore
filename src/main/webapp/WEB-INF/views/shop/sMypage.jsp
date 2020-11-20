@@ -5,8 +5,7 @@
  <br><br><br>
       <section class="confirmation_part section_padding">
         <div class="container">
-      
-	
+
             <div class="row justify-content-center">
                 <div class="col-lg-5  col-sm-4" >
                     <div class="blog_right_sidebar">
@@ -58,7 +57,7 @@
                                  	<h4>Today New Qna: ${tQcount }</h4>
                                  </div>
                                  <div class="input-group mb-3">
-                                 	<h4>No Reply: </h4>
+                                 	<a href="/shop/sQnA"><h4>No Reply: ${noReply }</h4></a>
                                  </div>
                             </div>
     					</aside>
@@ -70,7 +69,7 @@
                         <aside class="single_sidebar_widget search_widget">
                             <div class="form-group">
                                 <div class="input-group mb-3">                                    
-                                    <h3>ReView</h3>
+                                    <h3>Review</h3>
                                  </div>
                                  <div class="input-group mb-3">
                                  	<h4>New Review: </h4>
@@ -81,12 +80,8 @@
                             </div>
     					</aside>
                     </div>
-               </div>
-               
-           </div>
-           
-           
-           
+               </div>               
+           </div>          
         </div>
      </section>
 

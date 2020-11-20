@@ -81,13 +81,7 @@ public class UserService {
 		User u2 = uRepository.findByEmail(user.getEmail())
 				.orElseThrow(()->{
 					return new IllegalArgumentException("수정 실패: 아이디 없음");
-				});
-		
-//		AuthEntity a2 = aRepository.findByEmail(auth.getEmail())
-//				.orElseThrow(()->{
-//					return new IllegalArgumentException("수정 실패: 아이디 없음");
-//				});
-		
+				});		
 		
 		String rawPass = user.getPassword();
 		String enPass = pwEncoder.encode(rawPass);
@@ -99,9 +93,7 @@ public class UserService {
 		u2.setPassword(enPass);
 		u2.setPhone(user.getPhone());
 		u2.setZipcode(user.getZipcode());	
-		
-//		Auth a = new Auth();
-//		a.setPassword(enPass);
+;
 		
 		
 		

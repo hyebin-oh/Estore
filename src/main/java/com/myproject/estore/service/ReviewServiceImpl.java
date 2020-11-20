@@ -43,4 +43,19 @@ public class ReviewServiceImpl implements ReviewService {
 		return rMapper.rfindByPnum(pnum);
 	}
 
+	@Override
+	public ReviewDTO rfindByOnum(int onum) {		
+		return rMapper.rfindByOnum(onum);
+	}
+
+	@Override
+	public int rCount(int rnum) {
+		return rMapper.rCount(rnum);
+	}
+
+	@Override
+	public int sysCount() {		
+		return rMapper.sysCount();
+	}
+
 }

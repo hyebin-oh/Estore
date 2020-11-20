@@ -23,14 +23,14 @@
     <section class="feature_part section_padding">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-2 col-sm-5" onclick="location.href='/shop/shopInfo'" style="cursor:pointer">
+                <div class="col-lg-2 col-sm-5" onclick="location.href='/admin/sInfo'" style="cursor:pointer">
                     <div class="single_feature_part">
                         <a href="#"><img src="/assets/img/icon/feature_icon_1.svg" alt="#"></a>
                         <h4>All Shop</h4>
                     </div>
                 </div>
                 
-                <div class="col-lg-2 col-sm-5" onclick="location.href='/shop/shopOrderList'" style="cursor:pointer">
+                <div class="col-lg-2 col-sm-5" onclick="location.href='/admin/aOList'" style="cursor:pointer">
                     <div class="single_feature_part">
                         <img src="/assets/img/icon/icon_2.png" alt="#">
                         <h4>New Order</h4>

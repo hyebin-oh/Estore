@@ -1,6 +1,7 @@
 package com.myproject.estore.service;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -34,12 +35,23 @@ public class ShopService {
 	private ShopMapper sMapper;
 	
 	//shop product list
-		public List<ProductDTO> shopPList(String sid) {
-			return sMapper.sPList(sid);
-		}
+	public List<ProductDTO> shopPList(HashMap<String, Object> hm) {
+		return sMapper.sPList(hm);
+	}
+	
+	//제품 수
+	public int sPcount(HashMap<String, Object> hm) {
+		return sMapper.pCount(hm);
+	}
 
-	public List<OrderDTO> shopOList(String sid){
-		return sMapper.sOList(sid);
+	//주문리스트
+	public List<OrderDTO> shopOList(HashMap<String, Object> hm){
+		return sMapper.sOList(hm);
+	}
+	
+	//주문 수
+	public int sOcount(HashMap<String, Object> hm) {
+		return sMapper.oCount(hm);
 	}
 	
 	//order상세보기 - 고객정보
@@ -86,6 +98,11 @@ public class ShopService {
 	//오늘 qna 수
 	public int tqlist(String sid) {
 		return sMapper.todayQlist(sid);
+	}
+	
+	//댓글 수 0
+	public int noReply(String sid) {
+		return sMapper.noReply(sid);
 	}
 	
 	//shop 정보수정

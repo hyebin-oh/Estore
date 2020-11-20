@@ -17,4 +17,10 @@ public interface ReviewService {
 	public void rDelete(int rnum);
 	//product에 따른 상세보기
 	public List<ReviewDTO> rfindByPnum(int pnum);
+	//onum에 따른 list
+	public ReviewDTO rfindByOnum(int onum);
+	//review 수
+	public int rCount(int rnum);
+	//오늘 리뷰 수
+	public int sysCount();
 }

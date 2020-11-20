@@ -1,11 +1,14 @@
 package com.myproject.estore.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
 import com.myproject.estore.dto.OrderDTO;
+import com.myproject.estore.dto.PageAction;
 import com.myproject.estore.dto.ProductDTO;
 import com.myproject.estore.dto.QnADTO;
 import com.myproject.estore.dto.Shop;
+import com.myproject.estore.dto.sOrderListDTO;
+import com.myproject.estore.dto.sProductListDTO;
 import com.myproject.estore.service.ShopService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,6 +40,9 @@ import lombok.RequiredArgsConstructor;
 public class ShopController {
 	private final ShopService sService;
 	private final PasswordEncoder pwEncoder;
+	
+	@Autowired
+	private PageAction page;
 	
 	//mypage
 	//마이페이지로
@@ -52,11 +61,15 @@ public class ShopController {
 		//오늘 qna
 		int todayQcount = sService.tqlist(sid);
 		
+		//댓글0
+		int noReply = sService.noReply(sid);		
+		
 		model.addAttribute("count", newOcount);
 		model.addAttribute("sum", newOsum );
 		model.addAttribute("wCount", weekOcount);
 		model.addAttribute("wSum", weekOsum);
 		model.addAttribute("tQcount", todayQcount);
+		model.addAttribute("noReply", noReply);
 		return "/shop/sMypage";
 	}
 	
@@ -116,22 +129,152 @@ public class ShopController {
 	
 	//Myproduct List
 	@GetMapping("sProduct")
-	public String sPList(Principal principal, Model model) {
+	public String sPList(Principal principal, Model model, String pageNum, String field, String word) {
 		String sid = principal.getName();
-		List<ProductDTO> sPList = sService.shopPList(sid);
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("field", field);
+		hm.put("word", word);
+		hm.put("sid", sid);
+		
+		int count = sService.sPcount(hm);
+		
+		//페이징
+		int pageSize = 5;
+		if(pageNum==null) pageNum ="1";
+		int currentPage = Integer.parseInt(pageNum);//현재페이지
+		int startRow = (currentPage-1)*pageSize+1;//첫 행
+		int endRow = startRow+pageSize-1; //마지막 행
+		if(endRow>count) endRow=count; //마지막 게시글
+
+		hm.put("startRow",startRow);
+		hm.put("endRow", endRow);
+				
+		String pageHtml = page.paging(count, pageSize, currentPage, field, word);
+		
+		List<ProductDTO> sPList = sService.shopPList(hm);
+		model.addAttribute("count", count);
+		model.addAttribute("pageHtml", pageHtml);
 		model.addAttribute("list", sPList);
 		
 		return "/shop/shopProductList";
 	}
 	
+	//제품 검색
+	@GetMapping("pSearch")
+	@ResponseBody
+	public sProductListDTO pSearch(Principal principal,String pageNum,String field, String word) {
+		String sid= principal.getName();
+		
+		System.out.println(word);		
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		hm.put("field", field);
+		hm.put("word", word);
+		hm.put("sid", sid);
+		
+		//갯수
+		int count = sService.sPcount(hm);		
+		
+		//페이징
+		int pageSize = 5;
+		if(pageNum==null) pageNum ="1";
+		int currentPage = Integer.parseInt(pageNum);//현재페이지
+		int startRow = (currentPage-1)*pageSize+1;//첫 행
+		int endRow = startRow+pageSize-1; //마지막 행
+		if(endRow>count) endRow=count; //마지막 게시글
+
+		hm.put("startRow",startRow);
+		hm.put("endRow", endRow);
+		
+		//리스트		
+		List<ProductDTO> sPList = sService.shopPList(hm);
+		
+		String pageHtml = page.paging(count, pageSize, currentPage, field, word);
+		
+		sProductListDTO sList = new sProductListDTO(count, sPList, pageHtml);
+		
+		return sList;		
+	}	
+	
+	
 	//shop newOrder
 	@GetMapping("sOrderList")
-	public String sOList(Principal principal, Model model) {
+	public String sOList(Principal principal, Model model, String pageNum, String field, String word) {
 		String sid= principal.getName();
-		List<OrderDTO> sOlist = sService.shopOList(sid);
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("field", field);
+		hm.put("word", word);
+		hm.put("sid", sid);
+		
+		//갯수
+		int count = sService.sOcount(hm);
+		
+		//페이징
+		int pageSize = 5;
+		if(pageNum==null) pageNum ="1";
+		int currentPage = Integer.parseInt(pageNum);//현재페이지
+		int startRow = (currentPage-1)*pageSize+1;//첫 행
+		int endRow = startRow+pageSize-1; //마지막 행
+		if(endRow>count) endRow=count; //마지막 게시글
+
+		hm.put("startRow",startRow);
+		hm.put("endRow", endRow);
+		
+		String pageHtml = page.paging(count, pageSize, currentPage, field, word);
+		
+		
+		List<OrderDTO> sOlist = sService.shopOList(hm);
 		model.addAttribute("sOlist", sOlist);
+		model.addAttribute("count", count);
+		model.addAttribute("pageHtml", pageHtml);
+		
 		return "/shop/shopOrderList";
 	}
+	
+	//order search
+	@GetMapping("oSearch")
+	@ResponseBody
+	public sOrderListDTO oSearch(Principal principal,String pageNum,String field, String word) {
+		String sid= principal.getName();
+		
+		System.out.println(word);
+		
+		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		hm.put("field", field);
+		hm.put("word", word);
+		hm.put("sid", sid);
+		
+		//갯수
+		int count = sService.sOcount(hm);
+		
+		//페이징
+		int pageSize = 5;
+		if(pageNum==null) pageNum ="1";
+		int currentPage = Integer.parseInt(pageNum);//현재페이지
+		int startRow = (currentPage-1)*pageSize+1;//첫 행
+		int endRow = startRow+pageSize-1; //마지막 행
+		if(endRow>count) endRow=count; //마지막 게시글
+
+		hm.put("startRow",startRow);
+		hm.put("endRow", endRow);
+		
+		//리스트
+		
+		List<OrderDTO> sOlist = sService.shopOList(hm);
+		
+		String pageHtml = page.paging(count, pageSize, currentPage, field, word);
+		
+		sOrderListDTO oList = new sOrderListDTO(count, sOlist, pageHtml);
+		
+		return oList;		
+	}
+	
+	
 	
 	//shop qna 리스트
 	@GetMapping("sQnA")

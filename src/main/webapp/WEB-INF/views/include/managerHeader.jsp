@@ -32,6 +32,7 @@
                     </div>
                 </div>
                 
+                <!--  <div class="col-lg-2 col-sm-5" onclick="location.href='/shop/sOrderList'" style="cursor:pointer">-->
                 <div class="col-lg-2 col-sm-5" onclick="location.href='/shop/sOrderList'" style="cursor:pointer">
                     <div class="single_feature_part">
                         <img src="/assets/img/icon/icon_2.png" alt="#">

@@ -24,7 +24,7 @@
 		                </td>
 		                
 		            	<td>
-		           		 <h5>${list.title }</h5>
+		           		 <h5>${list.title } [<span>${list.replyCnt}</span>]</h5>
 		                </td>
 		                
 						<td>

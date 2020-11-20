@@ -1,5 +1,6 @@
 package com.myproject.estore.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -7,22 +8,30 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import com.myproject.estore.dto.CartDTO;
 import com.myproject.estore.dto.OrderDTO;
 import com.myproject.estore.dto.ProductDTO;
 import com.myproject.estore.dto.QnADTO;
+import com.myproject.estore.dto.ReviewDTO;
 
 @Repository
 @Mapper
 public interface ShopMapper {
-
+	
+	//review와 product조인
+	public int sRList(String sid); 
+	
 	//가게 상품 조회
-	@Select("select * from product where sid=#{sid}")
-	public List<ProductDTO> sPList(String sid);
+	public List<ProductDTO> sPList(HashMap<String, Object> hm);
+	
+	//가게 상품 개숫
+	public int pCount(HashMap<String, Object> hm);
 	
 	//주문 조회
-	@Select("select ordernum, name, userid, sum(pcount) sum, price, create_date, orderstate "
-			+ "from ordering where sid=#{sid} group by ordernum order by create_date asc")
-	public List<OrderDTO> sOList(String sid);
+	public List<OrderDTO> sOList(HashMap<String, Object> hm);
+	
+	//주문 수
+	public int oCount(HashMap<String, Object> hm);
 	
 	//주문 상세 조회 - 주문자 정보
 	@Select("select ordernum, userid, name, address, phone, pay, create_date, sum(price) total "
@@ -42,25 +51,28 @@ public interface ShopMapper {
 	@Select("select count(*) from ordering where sid=#{sid} "
 			+ "and DATE_FORMAT(create_date, '%Y-%m-%d') = CURDATE()")
 	public int newOcount(String sid);
-	
+		
 	//오늘 판매 금액
 	@Select("select sum(price) from ordering where sid=#{sid} "
 			+ "and DATE_FORMAT(create_date, '%Y-%m-%d') = CURDATE()")
 	public int newOsum(String sid);
-	
+		
 	//이번주 판매 수량
 	@Select("SELECT count(*) FROM ordering WHERE create_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW()")
 	public int weekOcount(String sid);
-	
+		
 	//이번주 판매 금액
 	@Select("SELECT sum(price) FROM ordering WHERE create_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW()")
 	public int weekOsum(String sid);
 	
-	//가게 상품 qna 리스트
-	public List<QnADTO> sQList(String sid);
-	
-	//오늘 qna 갯수
+	//qna 전체 리스트
+	public List<QnADTO> sQList(String sid);	
+
 	public int todayQlist(String sid);
+	
+	//댓글 0
+	@Select("select count(*) from qna")
+	public int noReply(String sid);
 	
 	
 }

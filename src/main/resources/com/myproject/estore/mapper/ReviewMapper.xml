@@ -9,6 +9,10 @@
  		select * from review where pnum=#{pnum}
  	</select>
  	
+ 	<select id="rfindByOnum" parameterType="int" resultType="com.myproject.estore.dto.ReviewDTO">
+ 		select * from review where onum=#{onum}
+ 	</select>
+ 	
  	<select id="rList" resultType="com.myproject.estore.dto.ReviewDTO">
  		select * from review
  	</select>
@@ -24,4 +28,13 @@
  	<select id="rDetail" parameterType="int" resultType="com.myproject.estore.dto.ReviewDTO">
  		select * from review where rnum=#{rnum}
  	</select>
+ 	
+ 	<select id="rCount" parameterType="int">
+ 		select count(*) from review 
+ 	</select>
+ 	
+ 	<select id="sysCount" resultType="int">
+ 		select count(*) from review where DATE_FORMAT(create_date, '%Y-%m-%d') = CURDATE() 	
+ 	</select>
+ 	
  </mapper>
